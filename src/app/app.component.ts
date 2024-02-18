@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { JavaPageComponent } from './java-page/java-page.component';
 import { JavascriptPageComponent } from './javascript-page/javascript-page.component';
@@ -26,4 +26,40 @@ export class AppComponent {
   selectedLanguage = 'Java';
 
   programmingLanguageEnum = ProgrammingLanguage;
+
+  // 表示したいコンポーネントのリスト
+  private programmingLanguageList = [
+    {
+      component: JavaPageComponent,
+      key: ProgrammingLanguage.JAVA,
+      inputs: {
+        input: 'Javaのページ',
+      },
+    },
+    {
+      component: JavascriptPageComponent,
+      key: ProgrammingLanguage.JAVASCRIPT,
+      inputs: {
+        input: 'JavaScriptのページ',
+      },
+    },
+    {
+      component: TypescriptPageComponent,
+      key: ProgrammingLanguage.TYPESCRIPT,
+      inputs: {
+        input: 'TypeScriptのページ',
+      },
+    },
+  ] as {
+    component: Type<any>;
+    key: ProgrammingLanguage;
+    inputs: Record<string, unknown>;
+  }[];
+
+  // セレクトボックスで選択された言語のコンポーネントを取得
+  get currentProgrammingLanguage() {
+    return this.programmingLanguageList.find(
+      (language) => language.key === this.selectedLanguage
+    )!;
+  }
 }
